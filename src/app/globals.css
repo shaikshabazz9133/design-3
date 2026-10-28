@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  /* Maison Aurelle — dark editorial luxury: espresso, bone, brass */
+  --color-base: #12100e;
+  --color-raised: #1b1814;
+  --color-deep: #0b0a08;
+  --color-bone: #efe7da;
+  --color-mute: #a59b8d;
+  --color-champagne: #dccaa8;
+  --color-gold: #c8a46a;
+  --color-gold-soft: #dcc08c;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-float-slow: float 13s ease-in-out infinite;
+  --animate-scroll-cue: scroll-cue 2.4s var(--ease-luxe) infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    50% { transform: translate3d(0, -14px, 0) rotate(3deg); }
+  }
+  @keyframes scroll-cue {
+    0% { transform: scaleY(0); transform-origin: top; }
+    45% { transform: scaleY(1); transform-origin: top; }
+    55% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+}
+
+@theme inline {
+  --font-serif: var(--font-bodoni), "Bodoni Moda", Didot, Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-base);
+  color: var(--color-bone);
+  overflow-x: clip;
+}
+
+::selection { background: var(--color-gold); color: var(--color-base); }
+
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; outline-color: var(--color-gold); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .motion-safe-only { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* Loader fallback: if scripts never run, the first-load loader still clears. */
+.loader-initial { animation: loader-fallback 0.5s ease 5s forwards; }
+@keyframes loader-fallback { to { opacity: 0; visibility: hidden; } }
